@@ -1,0 +1,281 @@
+
+The Following are the tables has to be in your database & model deisgn:
+users
+codekata
+attendance
+topics
+tasks
+company_drives
+mentors
+students_activated_courses
+courses
+
+The following are the queries need to be executed
+
+1. Create tables for the above list given
+2. insert at least 5 rows of values in each table
+3. get number problems solved in codekata by combining the users
+4. display the no of company drives attended by a user
+5. combine and display students_activated_courses and courses for a specific user groping them based on the course
+6. list all the mentors
+7. list the number of students that are assigned for a mentor
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+1. Create tables for the above list given
+
+
+CREATE DATABASE students;
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+2. insert at least 5 rows of values in each table
+
+
+--------------users-----------------
+
+CREATE TABLE `students`.`users` (
+  `Stud_id` INT NOT NULL,
+  `Stud_Name` VARCHAR(45) NOT NULL,
+  `Email` VARCHAR(45) NOT NULL,
+   PRIMARY KEY (`Stud_id`)
+   );
+
+
+INSERT INTO `students`.`users` (`Stud_id`, `Stud_Name`, `Email`) VALUES ('101', 'Abu', 'abu@gmail.com');
+INSERT INTO `students`.`users` (`Stud_id`, `Stud_Name`, `Email`) VALUES ('102', 'Gayu', 'gayu@gmail.com');
+INSERT INTO `students`.`users` (`Stud_id`, `Stud_Name`, `Email`) VALUES ('103', 'Chottu', 'chottu@gmail.com');
+INSERT INTO `students`.`users` (`Stud_id`, `Stud_Name`, `Email`) VALUES ('104', 'Bhima', 'bhima@gmail.com');
+INSERT INTO `students`.`users` (`Stud_id`, `Stud_Name`, `Email`) VALUES ('105', 'Nasir', 'nasir@gmail.com');
+
+--------------codekata----------------
+
+CREATE TABLE `students`.`codekata` (
+   `codekata_id` INT NOT NULL,
+   `Stud_id` INT NOT NULL,
+   `Prom_total` INT NOT NULL,
+   `Solved` INT NOT NULL,
+   `Unsolved` INT NOT NULL,
+    PRIMARY KEY (`codekata_id`),
+    INDEX `Stud_id_idx` (`Stud_id` ASC) VISIBLE,
+    CONSTRAINT `Stud_id`
+    FOREIGN KEY (`Stud_id`)
+    REFERENCES `students`.`users` (`Stud_id`)
+    );
+
+INSERT INTO `students`.`codekata` (`codekata_id`, `Stud_id`, `Prom_total`, `Solved`, `Unsolved`) VALUES ('1', '101', '10', '8', '2');
+INSERT INTO `students`.`codekata` (`codekata_id`, `Stud_id`, `Prom_total`, `Solved`, `Unsolved`) VALUES ('2', '102', '10', '7', '3');
+INSERT INTO `students`.`codekata` (`codekata_id`, `Stud_id`, `Prom_total`, `Solved`, `Unsolved`) VALUES ('3', '103', '10', '5', '5');
+INSERT INTO `students`.`codekata` (`codekata_id`, `Stud_id`, `Prom_total`, `Solved`, `Unsolved`) VALUES ('4', '104', '10', '6', '4');
+INSERT INTO `students`.`codekata` (`codekata_id`, `Stud_id`, `Prom_total`, `Solved`, `Unsolved`) VALUES ('5', '105', '10', '4', '6');
+
+
+--------------attendance-------------
+
+CREATE TABLE `students`.`attendance` (
+   `attendance_id` INT NOT NULL,
+   `Stud_id` INT NOT NULL,
+   `No of days` INT NOT NULL,
+   `Present` INT NOT NULL,
+   `Absent` INT NOT NULL,
+    PRIMARY KEY (`attendance_id`),
+    FOREIGN KEY (`Stud_id`)
+    REFERENCES `students`.`users` (`Stud_id`)
+    );
+
+
+INSERT INTO `students`.`attendance` (`attendance_id`, `Stud_id`, `No of days`, `Present`, `Absent`) VALUES ('1', '101', '30', '27', '3');
+INSERT INTO `students`.`attendance` (`attendance_id`, `Stud_id`, `No of days`, `Present`, `Absent`) VALUES ('2', '102', '30', '25', '5');
+INSERT INTO `students`.`attendance` (`attendance_id`, `Stud_id`, `No of days`, `Present`, `Absent`) VALUES ('3', '103', '30', '28', '2');
+INSERT INTO `students`.`attendance` (`attendance_id`, `Stud_id`, `No of days`, `Present`, `Absent`) VALUES ('4', '104', '30', '24', '6');
+INSERT INTO `students`.`attendance` (`attendance_id`, `Stud_id`, `No of days`, `Present`, `Absent`) VALUES ('5', '105', '30', '22', '8');
+
+------------------topics--------------
+
+
+CREATE TABLE `students`.`topics` (
+   `topics_id` INT NOT NULL,
+   `Stud_id` INT NOT NULL,
+   `Stud_Name` VARCHAR(45) NOT NULL,
+   `Covered` VARCHAR(45) NOT NULL,
+    PRIMARY KEY (`topics_id`),
+    FOREIGN KEY (`Stud_id`)
+    REFERENCES `students`.`users` (`Stud_id`)
+    );
+
+INSERT INTO `students`.`topics` (`topics_id`, `Stud_id`, `Stud_Name`, `Covered`) VALUES ('1', '101', 'Abu', 'Html,Css');
+INSERT INTO `students`.`topics` (`topics_id`, `Stud_id`, `Stud_Name`, `Covered`) VALUES ('2', '102', 'Gayu', 'React');
+INSERT INTO `students`.`topics` (`topics_id`, `Stud_id`, `Stud_Name`, `Covered`) VALUES ('3', '103', 'Chottu', 'Javascript');
+INSERT INTO `students`.`topics` (`topics_id`, `Stud_id`, `Stud_Name`, `Covered`) VALUES ('4', '104', 'Bhima', 'Node,Angular');
+INSERT INTO `students`.`topics` (`topics_id`, `Stud_id`, `Stud_Name`, `Covered`) VALUES ('5', '105', 'Nasir', 'Mysql,MongoDB');
+
+
+------------------tasks---------------------------
+
+
+CREATE TABLE `students`.`tasks` (
+   `tasks_id` INT NOT NULL,
+   `Stud_id` INT NOT NULL,
+   `total_task` INT NOT NULL,
+   `Completed` INT NOT NULL,
+   `Pending` INT NOT NULL,
+    PRIMARY KEY (`tasks_id`),
+    FOREIGN KEY (`Stud_id`)
+    REFERENCES `students`.`users` (`Stud_id`)
+   );
+							
+
+INSERT INTO `students`.`tasks` (`tasks_id`, `Stud_id`, `total_task`, `Completed`, `Pending`) VALUES ('1', '101', '10', '9', '1');
+INSERT INTO `students`.`tasks` (`tasks_id`, `Stud_id`, `total_task`, `Completed`, `Pending`) VALUES ('2', '102', '10', '8', '2');
+INSERT INTO `students`.`tasks` (`tasks_id`, `Stud_id`, `total_task`, `Completed`, `Pending`) VALUES ('3', '103', '10', '7', '3');
+INSERT INTO `students`.`tasks` (`tasks_id`, `Stud_id`, `total_task`, `Completed`, `Pending`) VALUES ('4', '104', '10', '8', '2');
+INSERT INTO `students`.`tasks` (`tasks_id`, `Stud_id`, `total_task`, `Completed`, `Pending`) VALUES ('5', '105', '10', '6', '4');
+
+
+
+
+-----------------------company drives--------------------
+
+
+CREATE TABLE `students`.`company drives` (
+   `company_drives_id` INT NOT NULL,
+   `Stud_id` INT NOT NULL,
+   `total_drives` INT NOT NULL,
+   `Attended` INT NOT NULL,
+   `Declined` INT NOT NULL,
+    PRIMARY KEY (`company_drives_id`),
+    FOREIGN KEY (`Stud_id`)
+    REFERENCES `students`.`users` (`Stud_id`)
+    );
+
+INSERT INTO `students`.`company drives` (`company_drives_id`, `Stud_id`, `total_drives`, `Attended`, `Declined`) VALUES ('1', '101', '10', '4', '6');
+INSERT INTO `students`.`company drives` (`company_drives_id`, `Stud_id`, `total_drives`, `Attended`, `Declined`) VALUES ('2', '102', '10', '5', '5');
+INSERT INTO `students`.`company drives` (`company_drives_id`, `Stud_id`, `total_drives`, `Attended`, `Declined`) VALUES ('3', '103', '10', '7', '3');
+INSERT INTO `students`.`company drives` (`company_drives_id`, `Stud_id`, `total_drives`, `Attended`, `Declined`) VALUES ('4', '104', '10', '6', '4');
+INSERT INTO `students`.`company drives` (`company_drives_id`, `Stud_id`, `total_drives`, `Attended`, `Declined`) VALUES ('5', '105', '10', '3', '7');
+
+
+-------------------mentors------------------
+
+
+CREATE TABLE `students`.`mentors` (
+   `Sq_id` INT NOT NULL,
+   `Mentor_id` INT NOT NULL,
+   `Mentor_Name` VARCHAR(45) NOT NULL,
+   `Stud_id` INT NOT NULL,
+   `Assigned _Stud` VARCHAR(45) NOT NULL,
+    PRIMARY KEY (`Sq_id`),
+    FOREIGN KEY (`Stud_id`)
+    REFERENCES `students`.`users` (`Stud_id`)
+    );
+
+
+INSERT INTO `students`.`mentors` (`Sq_id`, `Mentor_id`, `Mentor_Name`, `Stud_id`, `Assigned _Stud`) VALUES ('1', '111', 'Ravi', '101', 'Abu');
+INSERT INTO `students`.`mentors` (`Sq_id`, `Mentor_id`, `Mentor_Name`, `Stud_id`, `Assigned _Stud`) VALUES ('2', '222', 'Abdul', '102', 'Gayu');
+INSERT INTO `students`.`mentors` (`Sq_id`, `Mentor_id`, `Mentor_Name`, `Stud_id`, `Assigned _Stud`) VALUES ('3', '333', 'Laksh', '103', 'Chottu');
+INSERT INTO `students`.`mentors` (`Sq_id`, `Mentor_id`, `Mentor_Name`, `Stud_id`, `Assigned _Stud`) VALUES ('4', '444', 'Sundar', '104', 'Bhima');
+INSERT INTO `students`.`mentors` (`Sq_id`, `Mentor_id`, `Mentor_Name`, `Stud_id`, `Assigned _Stud`) VALUES ('5', '555', 'Devi', '105', 'Nasir');
+
+
+-------------------------students activated courses-------------------
+
+CREATE TABLE `students`.`students activated courses` (
+   `students_activated_courses_id` INT NOT NULL,
+   `Stud_id` INT NOT NULL,
+   `Stud_Name` VARCHAR(45) NOT NULL,
+   `Stud_course_id` VARCHAR(45) NOT NULL,
+   `Stud_activated_courses` VARCHAR(100) NOT NULL,
+    PRIMARY KEY (`students_activated_courses_id`),
+    FOREIGN KEY (`Stud_id`)
+    REFERENCES `students`.`users` (`Stud_id`)
+);
+
+
+INSERT INTO `students`.`students activated courses` (`students_activated_courses_id`, `Stud_id`, `Stud_Name`, `Stud_course_id`, `Stud_activated_courses`) VALUES ('1', '101', 'Abu', '1001, 1006', 'Html,Css');
+INSERT INTO `students`.`students activated courses` (`students_activated_courses_id`, `Stud_id`, `Stud_Name`, `Stud_course_id`, `Stud_activated_courses`) VALUES ('2', '102', 'Gayu', '1002', 'React');
+INSERT INTO `students`.`students activated courses` (`students_activated_courses_id`, `Stud_id`, `Stud_Name`, `Stud_course_id`, `Stud_activated_courses`) VALUES ('3', '103', 'Chottu', '1003', 'Javascript');
+INSERT INTO `students`.`students activated courses` (`students_activated_courses_id`, `Stud_id`, `Stud_Name`, `Stud_course_id`, `Stud_activated_courses`) VALUES ('4', '104', 'Bhima', '1004, 1007', 'Node,Angular');
+INSERT INTO `students`.`students activated courses` (`students_activated_courses_id`, `Stud_id`, `Stud_Name`, `Stud_course_id`, `Stud_activated_courses`) VALUES ('5', '105', 'Nasir', '1005, 1008', 'Mysql,MongoDB');
+
+
+----------------------courses--------------------
+
+
+CREATE TABLE `students`.`courses` (
+  `courses_id` INT NOT NULL,
+  `Stud_course_id` INT NOT NULL,
+  `Coures_Name` VARCHAR(100) NOT NULL,
+  `Stud_id` INT NOT NULL,
+  `Stud_Name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`courses_id`),
+    FOREIGN KEY (`Stud_id`)
+    REFERENCES `students`.`users` (`Stud_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
+INSERT INTO `students`.`courses` (`courses_id`, `Stud_course_id`, `Coures_Name`, `Stud_id`, `Stud_Name`) VALUES ('1', '1001', 'Html', '101', 'Abu');
+INSERT INTO `students`.`courses` (`courses_id`, `Stud_course_id`, `Coures_Name`, `Stud_id`, `Stud_Name`) VALUES ('2', '1002', 'React', '102', 'Gayu');
+INSERT INTO `students`.`courses` (`courses_id`, `Stud_course_id`, `Coures_Name`, `Stud_id`, `Stud_Name`) VALUES ('3', '1003', 'Javascript', '103', 'Chottu');
+INSERT INTO `students`.`courses` (`courses_id`, `Stud_course_id`, `Coures_Name`, `Stud_id`, `Stud_Name`) VALUES ('4', '1004', 'Node', '104', 'Bhima');
+INSERT INTO `students`.`courses` (`courses_id`, `Stud_course_id`, `Coures_Name`, `Stud_id`, `Stud_Name`) VALUES ('5', '1005', 'Mysql', '105', 'Nasir');
+INSERT INTO `students`.`courses` (`courses_id`, `Stud_course_id`, `Coures_Name`, `Stud_id`, `Stud_Name`) VALUES ('6', '1006', 'Css', '101', 'Abu');
+INSERT INTO `students`.`courses` (`courses_id`, `Stud_course_id`, `Coures_Name`, `Stud_id`, `Stud_Name`) VALUES ('7', '1007', 'Angular', '104', 'Bhima');
+INSERT INTO `students`.`courses` (`courses_id`, `Stud_course_id`, `Coures_Name`, `Stud_id`, `Stud_Name`) VALUES ('8', '1008', 'MongoDB', '105', 'Nasir');
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+3. get number problems solved in codekata by combining the users
+
+SELECT users.Stud_Name, codekata.Solved
+FROM users
+JOIN codekata ON users.Stud_id = codekata.Stud_id;
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+4. display the no of company drives attended by a user
+
+SELECT users.Stud_id, users.Stud_Name, company_drives.attended
+FROM users
+JOIN company_drives ON users.Stud_id = company_drives.Stud_id;
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+5. combine and display students_activated_courses and courses for a specific user groping them based on the course
+
+SELECT students_activated_courses.Stud_Name,students_activated_courses.Stud_course_id,students_activated_courses.Stud_activated_courses, COUNT(courses.Stud_Name)  
+FROM courses 
+JOIN students_activated_courses 
+ON students_activated_courses.Stud_id = courses.Stud_id
+GROUP BY students_activated_courses.Stud_activated_courses, courses.Stud_Name;
+
+
+(or)
+
+SELECT students_activated_courses.Stud_Name,students_activated_courses.stud_activated_courses, COUNT(courses.Coures_Name)
+FROM users
+JOIN courses ON users.Stud_id = courses.Stud_id
+JOIN students_activated_courses ON users.Stud_id = students_activated_courses.Stud_id
+GROUP BY users.Stud_Name;
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+6. list all the mentors
+
+SELECT Mentor_id, Mentor_Name
+FROM mentors;
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+7. list the number of students that are assigned for a mentor
+
+SELECT Mentor_Name, Stud_id, COUNT(Mentor_id) 
+FROM mentors  
+GROUP BY Mentor_id;
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
